@@ -8,6 +8,7 @@ import Unocss from 'unocss/vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import Layouts from 'vite-plugin-vue-layouts'
 import { env } from './shared/env'
+// import VueI18n from '@intlify/vite-plugin-vue-i18n'
 
 export default () => {
   return [
@@ -47,5 +48,11 @@ export default () => {
     }),
     // 布局系统
     Layouts(),
+    // 国际化
+    // VueI18n({
+    //   runtimeOnly: true,
+    //   compositionOnly: true,
+    //   include: [path.resolve(__dirname, 'locales/**')],
+    // }),
   ]
 }

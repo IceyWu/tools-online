@@ -2,6 +2,7 @@
 import { useClipboard, useTransition } from '@vueuse/core'
 import { POSITION, TYPE, useToast } from 'vue-toastification'
 import colorHistory from './components/colorHistory.vue'
+// const { t, availableLocales, locale } = useI18n()
 
 const toast = useToast()
 const color = ref('')
