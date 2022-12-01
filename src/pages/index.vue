@@ -16,7 +16,7 @@ const goColor = () => {
     <!-- <div i-carbon-campsite text-4xl inline-block /> -->
     <h1>Hi! guy! 🐱‍🐉</h1>
     <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
+      <a rel="noreferrer" href="https://github.com/IceyWu" target="_blank">
         IceyWu's tools
       </a>
     </p>
