@@ -16,10 +16,10 @@ const goColor = () => {
     <div i-carbon-campsite text-4xl inline-block />
     <p>
       <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
-        Vitesse Lite
+        IceyWu's tools
       </a>
     </p>
-    <p>
+    <!-- <p>
       <em text-sm op75>Opinionated Vite Starter Template</em>
     </p>
 
@@ -48,7 +48,7 @@ const goColor = () => {
       >
         Go
       </button>
-    </div>
+    </div> -->
     <div>
       <button
         class="m-3 text-sm btn"
