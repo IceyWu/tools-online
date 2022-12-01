@@ -13,7 +13,8 @@ const goColor = () => {
 
 <template>
   <div>
-    <div i-carbon-campsite text-4xl inline-block />
+    <!-- <div i-carbon-campsite text-4xl inline-block /> -->
+    <h1>Hi! guy! 🐱‍🐉</h1>
     <p>
       <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
         IceyWu's tools
