@@ -1,23 +1,7 @@
 <script setup lang="ts">
-const colorList = ref([
-  '#000000',
-  '#ffffff',
-  '#ff0000',
-  '#00ff00',
-  '#0000ff',
-  '#ffff00',
-  '#00ffff',
-  '#ff00ff',
-  '#c0c0c0',
-  '#808080',
-  '#800000',
-  '#808000',
-  '#008000',
-  '#800080',
-  '#008080',
-  '#000080',
-
-])
+const props = defineProps<{
+  colorList: string[]
+}>()
 </script>
 
 <template>

@@ -8,5 +8,8 @@
     "*.css": "postcss"
   },
   "editor.formatOnSave": false,
-  "testing.automaticallyOpenPeekView": "never"
+  "testing.automaticallyOpenPeekView": "never",
+  "i18n-ally.localesPaths": [
+    "locales"
+  ]
 }

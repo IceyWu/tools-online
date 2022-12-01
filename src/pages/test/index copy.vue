@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ItemBase from './components/item/Base.vue'
+const inputEl = $ref<HTMLInputElement>()
 const inputValue = ref('')
 const copyValue = ref('')
 const pingProcess = ref(false)
@@ -8,8 +9,14 @@ const suggestWords = ref('guessing...')
 // 是否正在联想
 const getSuggestLoading = ref(false)
 
+const userConfigLoading = ref(false)
+
 const isSearching = ref(false)
-const searchResult = ref([])
+const searchResult = ref([
+  'asas',
+  'asas',
+  'asas',
+])
 const inputChange = (e: any) => {
   if (e.keyCode === 229 && e.key === 'Process') {
     // console.log('*** 输入法切换')
@@ -36,38 +43,59 @@ const inputChange = (e: any) => {
 const getSuggest = async () => {
   suggestWords.value = 'guessing...'
   getSuggestLoading.value = true
+  isSearching.value = true
   setTimeout(() => {
     // suggestWords.value = '联想词'
     suggestWords.value = `${inputValue.value}as`
     getSuggestLoading.value = false
+    isSearching.value = false
   }, 800)
 }
+
 // 监听inputValue
 watch(inputValue, (val) => {
   copyValue.value = val
   getSuggest()
 })
+
+function clear() {
+  inputValue.value = ''
+  copyValue.value = ''
+  suggestWords.value = 'guessing...'
+  getSuggestLoading.value = false
+  isSearching.value = false
+}
 </script>
 
 <template>
-  <div
-    class="!w-full h-screen flex flex-col items-center justify-center"
-  >
-    <div relative border="~ rounded base" class="w-[30%] min-w-120 h-15 box-border" shadow font-200 text-2xl>
-      <div absolute flex w-full h-full px-6>
-        <div v-if="copyValue" color-transparent opacity-0 bg-transparent h-full z-9 flex items-center justify-start pt-2 box-border>
-          {{ copyValue }}
-        </div>
-        <div v-if="inputValue" bg-blue-400 color-gray bg-transparent h-full z-9 flex items-center justify-start pt-2 box-border ml-2>
-          {{ suggestWords }}
-
-          <!-- 旋转动画图标 -->
-          <div v-if="getSuggestLoading" class="animate-spin rounded-full h-3 w-3 border-t-2 border-b-2 border-gray" />
-        </div>
+  <div relative border="~ rounded base" shadow font-200 text-2xl>
+    <div v-if="userConfigLoading" p="x6 y4" gap2 row items-center animate-pulse>
+      <div i-carbon-circle-dash w-7 h-7 animate-spin />
+      <div op50>
+        loading config...
       </div>
-
-      <input v-model="inputValue" z-10 aria-label="What color it is?" placeholder="What color it is?..." type="text" autocomplete="off" w="full" p="x6 y4" bg-transparent border-none="" class="!outline-none absolute left-0" @keyup="inputChange">
     </div>
+    <input
+      v-else
+      ref="inputEl"
+      v-model="inputValue"
+
+      aria-label="Type to explore"
+      placeholder="Type to explore..."
+      type="text"
+      autocomplete="off" w="full"
+      p="x6 y4"
+      bg-transparent border-none
+      class="!outline-none"
+    >
+    <button
+      v-if="inputValue"
+      absolute flex right-2 w-10 top-2 bottom-2 text-xl op30 hover:op90
+      aria-label="Clear search"
+      @click="clear()"
+    >
+      <span i-carbon-close ma block aria-hidden="true" />
+    </button>
   </div>
   <div v-if="searchResult.length || isSearching" border="l b r base" mx2 of-auto>
     <template v-if="isSearching">
@@ -87,7 +115,6 @@ watch(inputValue, (val) => {
         :active="selectIndex === idx"
         @click="selectItem(i)"
       /> -->
-      qwqw
       <div divider />
     </template>
   </div>
