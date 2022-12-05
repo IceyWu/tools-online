@@ -4,6 +4,7 @@ import { setupLayouts } from 'virtual:generated-layouts'
 // Toast
 import type { PluginOptions } from 'vue-toastification'
 import Toast from 'vue-toastification'
+import { MotionPlugin } from '@vueuse/motion'
 import App from './App.vue'
 import generatedRoutes from '~pages'
 
@@ -15,6 +16,7 @@ import 'uno.css'
 import 'vue-toastification/dist/index.css'
 const routes = setupLayouts(generatedRoutes)
 const app = createApp(App)
+app.use(MotionPlugin)
 const options: PluginOptions = {
   // You can set your default options here
   maxToasts: 3,
