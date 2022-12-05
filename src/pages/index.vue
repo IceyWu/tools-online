@@ -6,8 +6,18 @@ const go = () => {
   if (name)
     router.push(`/hi/${encodeURIComponent(name)}`)
 }
-const goColor = () => {
-  router.push('/color')
+const btnList = [
+  {
+    name: 'Go Color',
+    path: '/color',
+  },
+  {
+    name: 'Go Links',
+    path: '/links',
+  },
+]
+const goDe = (data: any) => {
+  router.push(data.path)
 }
 </script>
 
@@ -52,10 +62,11 @@ const goColor = () => {
     </div> -->
     <div>
       <button
+        v-for="(item, index) in btnList" :key="index"
         class="m-3 text-sm btn"
-        @click="goColor"
+        @click="goDe(item)"
       >
-        Go Color
+        {{ item.name }}
       </button>
     </div>
   </div>

@@ -1,4 +1,5 @@
-<script setup>
+<script setup lang="ts">
+import { POSITION, TYPE, useToast } from 'vue-toastification'
 // import Prism Editor
 import { PrismEditor } from 'vue-prism-editor'
 import 'vue-prism-editor/dist/prismeditor.min.css' // import the styles somewhere
@@ -9,14 +10,30 @@ import 'prismjs/components/prism-clike'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/themes/prism-tomorrow.css' // import syntax highlighting styles
 import linkJson from './links.json'
-
+const toast = useToast()
 const code = ref('')
 // code.value =
 // code的值为linkJson的linkList
 code.value = JSON.stringify(linkJson.linkList, null, 2)
 
-const highlighter = (code) => {
+const highlighter = (code: any) => {
   return highlight(code, languages.js) // languages.<insert language> to return html with markup
+}
+
+// json下载await
+const download = async () => {
+  const blob = new Blob([code.value], { type: 'text/plain' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'links.json'
+  link.click()
+  toast({
+    type: TYPE.SUCCESS,
+    position: POSITION.TOP_RIGHT,
+    message: '下载成功',
+    timeout: 2000,
+  })
 }
 
 // 导出json
@@ -27,20 +44,66 @@ const exportJson = () => {
   a.download = 'links.json'
   a.click()
 }
+
+// 导入json
+const jsonFileName = ref('')
+const handleReadFile = (file: any) => {
+  const reader = new FileReader()
+  reader.readAsText(file)
+  reader.onload = (thisFile) => {
+    if (thisFile.target && thisFile.target.result) {
+      const result = JSON.parse(thisFile.target.result.toString())
+      code.value = JSON.stringify(result, null, 2)
+      return toast('导入成功!', {
+        type: TYPE.SUCCESS,
+        position: POSITION.TOP_RIGHT,
+      })
+    }
+  }
+}
+const importJson = (file: any) => {
+  const dom = document.getElementById('jsonFile') as HTMLInputElement
+  if (dom && dom.files) {
+    const file = dom.files[0]
+    const { name } = file
+    jsonFileName.value = name
+    handleReadFile(file)
+  }
+}
+const clickjsonFile = () => {
+  const dom = document.getElementById('jsonFile') as HTMLInputElement
+  if (dom)
+    dom.click()
+}
 </script>
 
 <template>
-  <div flex >
-    <div class="btn-lis flex-1 fcc">
+  <div flex>
+    <div class="btn-lis flex-1 f-c-c">
+      <!-- 导入Json文件 -->
+      <div>
+        <input
+          id="jsonFile"
+          display="none"
+          type="file"
+          accept=".json"
+          class="btn"
+          @change="importJson"
+        >
+        <div class="btn" @click="clickjsonFile">
+          {{ jsonFileName ? jsonFileName : '导入Json文件' }}
+        </div>
+      </div>
+
       <div class="btn" @click="exportJson">
         导出Json
       </div>
     </div>
-    <PrismEditor flex-1 v-model="code" mode="code" class="my-editor" :highlight="highlighter" line-numbers />
+    <PrismEditor v-model="code" flex-1 mode="code" class="my-editor" :highlight="highlighter" line-numbers />
   </div>
 </template>
 
-<style>
+<style lang="less">
   /* required class */
   .my-editor {
     /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
@@ -57,6 +120,11 @@ const exportJson = () => {
   /* optional class for removing the outline */
   .prism-editor__textarea:focus {
     outline: none;
+  }
+  .btn-lis{
+    > *:not(:last-child){
+      margin-bottom: 10px;
+    }
   }
 </style>
 
