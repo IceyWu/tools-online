@@ -7,6 +7,7 @@ import {
   // transformerDirectives,
   // transformerVariantGroup,
 } from 'unocss'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
 import type { Shortcut } from 'unocss'
 
 const usefulShortcuts: Shortcut[] = [
@@ -55,6 +56,9 @@ export default defineConfig({
         serif: 'DM Serif Display',
         mono: 'DM Mono',
       },
+    }),
+    presetScrollbar({
+      // config
     }),
   ],
   // transformers: [

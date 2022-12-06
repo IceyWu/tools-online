@@ -73,7 +73,7 @@ onMounted(() => {
       <EmptyData />
     </div>
     <div v-else w-full fcc h-full>
-      <div flex-1 f-c-c h-full>
+      <div flex-1 f-c-c h-full overflow="auto" scrollbar="~ dark:track-color-gray-800 dark:thumb-color-stone-500 rounded w-8px">
         <div>
           <div v-if="coverIsLoading" class="w-150 h-80 fcc animate-pulse bg-gray-500/5 p-2">
             Loading...
@@ -100,7 +100,7 @@ onMounted(() => {
         <!-- {{ selectItem }} -->
       </div>
       <div flex-1 relative h-full>
-        <header absolute w-full fsc>
+        <header mb-4 w-full fsc>
           <!-- switch选择器 -->
           <div class="bg-[#f2f3f5] dark:bg-[#2e2e30]" rounded-2xl px-4 py-1 fbc>
             <div v-for="item in switchList" :key="item.id" :class="selectSwitch === item.id ? 'bg-[#fff] !dark:bg-[#484849]' : ''" class="cursor-pointer hover:bg-[#c9cdd4] px-3 py-0.5 rounded-2xl dark:bg-transparent dark:hover:bg-[#484849]" not-last:mr-3 @click="(selectSwitch = item.id)">
@@ -108,7 +108,7 @@ onMounted(() => {
             </div>
           </div>
         </header>
-        <div v-if="(selectSwitch === 1)" flex flex-wrap items-center h-full>
+        <div v-if="(selectSwitch === 1)" scrollbar="~ dark:track-color-gray-800 dark:thumb-color-stone-500 rounded w-8px" class="card-list" flex flex-wrap items-center h-full>
           <div
             v-for="(item) in linkData"
             :key="item.id"
@@ -139,7 +139,7 @@ onMounted(() => {
           </div>
         </div>
         <div v-else>
-          <CollapseList mt-20 @click-collapse-item="clickItem" />
+          <CollapseList @click-collapse-item="clickItem" />
         </div>
       </div>
     </div>
@@ -171,6 +171,13 @@ onMounted(() => {
   {
     display: block;
   }
+}
+.card-list{
+  overflow: auto;
+  // height: 100%;
+  box-sizing: border-box;
+  // padding-top: 2rem;
+  height: calc(100% - 6rem);
 }
 </style>
 
