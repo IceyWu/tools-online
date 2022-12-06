@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./../../src/components/Counter.vue')['default']
+    EmptyData: typeof import('./../../src/components/EmptyData.vue')['default']
     Footer: typeof import('./../../src/components/Footer.vue')['default']
     LinkHeader: typeof import('./../../src/components/LinkHeader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

@@ -14,11 +14,7 @@ import { useLinksStore } from '~/store/links'
 const linksStore = useLinksStore()
 const { linksList } = storeToRefs(linksStore)
 const toast = useToast()
-const code = ref('')
-// code.value =
-// code的值为linkJson的linkList
-// code.value = JSON.stringify(linkJson.linkList, null, 2)
-code.value = JSON.stringify(linksList.value, null, 2)
+const code = computed(() => JSON.stringify(linksList.value, null, 2))
 
 const highlighter = (code: any) => {
   return highlight(code, languages.js) // languages.<insert language> to return html with markup
@@ -41,7 +37,7 @@ const handleReadFile = (file: any) => {
   reader.onload = (thisFile) => {
     if (thisFile.target && thisFile.target.result) {
       const result = JSON.parse(thisFile.target.result.toString())
-      code.value = JSON.stringify(result, null, 2)
+      // code.value = JSON.stringify(result, null, 2)
       // 保存到store
       linksStore.saveLinks(result)
       return toast('导入成功!', {
@@ -87,6 +83,9 @@ const clickjsonFile = () => {
 
       <div class="btn" @click="exportJson">
         导出Json
+      </div>
+      <div class="btn" @click="linksStore.initData">
+        清除数据
       </div>
     </div>
     <PrismEditor v-model="code" flex-1 mode="code" class="my-editor" :highlight="highlighter" line-numbers />

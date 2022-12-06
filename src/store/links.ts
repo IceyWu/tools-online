@@ -1,9 +1,10 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
+import { POSITION, TYPE, useToast } from 'vue-toastification'
+const toast = useToast()
 export const useLinksStore = defineStore('links', () => {
   // 定义字符串类型的响应式数据
   const linksList: any = ref([])
-  const collectLinksList: any = ref([1])
+  const collectLinksList: any = ref([])
   // 收藏的链接
   const collectLinks: any = computed(() => {
     return linksList.value.filter((item: any) => collectLinksList.value.includes(item.id))
@@ -31,6 +32,16 @@ export const useLinksStore = defineStore('links', () => {
       collectLinksList.value.push(id)
     }
   }
+  // 数据初始化
+  function initData() {
+    linksList.value = []
+    collectLinksList.value = []
+    toast('数据清除成功', {
+      // message: '数据初始化成功',
+      position: POSITION.TOP_RIGHT,
+      type: TYPE.SUCCESS,
+    })
+  }
   return {
     linksList,
     saveLinks,
@@ -38,6 +49,7 @@ export const useLinksStore = defineStore('links', () => {
     collectLinks,
     collectLinksList,
     saveCollectLink,
+    initData,
   }
 },
 {

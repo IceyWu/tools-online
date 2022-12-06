@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useLinksStore } from '~/store/links'
 interface LinkItem {
   id: number
@@ -10,7 +9,7 @@ interface LinkItem {
   isCollect?: boolean
 }
 const linksStore = useLinksStore()
-const { linkData = [] } = storeToRefs(linksStore)
+const linkData = computed(() => linksStore.linkData)
 const jump = (data: LinkItem) => {
   const { url } = data
   window.open(url)
@@ -22,10 +21,14 @@ const collect = (data: LinkItem) => {
 </script>
 
 <template>
-  <div w-full flex justify="center" items-center>
+  <div w-full flex flex-wrap content-start>
+    <div v-if="linkData.length === 0" w-full fcc>
+      <EmptyData />
+    </div>
     <div
-      v-for="(item) in linkData" :key="item.id"
-      class="shadow rounded-xl overflow-hidden cursor-pointer h-60 w-50 card-box relative flex justify-center items-center"
+      v-for="(item) in linkData"
+      v-else :key="item.id"
+      class="shadow rounded-xl overflow-hidden cursor-pointer h-60 w-50 card-box relative flex justify-center items-center mx-4 my-3"
       @click="jump(item)"
     >
       <div class="absolute h-full w-full bg-cover bg z-0 " :style="{ backgroundImage: `url(${item.cover})` }" />
@@ -57,7 +60,7 @@ const collect = (data: LinkItem) => {
   font-family: smiley-sans;
 
   &:not(:last-child) {
-    margin-right: 2rem;
+    // margin-right: 2rem;
   }
   .desc{
     transform: 0.5s;

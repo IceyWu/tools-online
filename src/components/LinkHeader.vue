@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 const routes = reactive([
   // { name: '导入', path: '/posts' },
-  { icon: 'i-carbon-delivery-parcel', path: '/links/code' },
+  { icon: 'i-carbon-link', path: '/links', title: '链接' },
+  { icon: 'i-carbon-delivery-parcel', path: '/links/code', title: '导入' },
   // { icon: 'i-carbon-bookmark', path: '/bookmark' },
   // { icon: 'i-carbon-notebook', path: '/notes' },
 ])
@@ -38,8 +39,9 @@ const routes = reactive([
           :key="route.path"
           :href="route.path"
           :title="
-            route.path.slice(1, 2).toUpperCase()
-              + route.path.slice(2).toLowerCase()
+            route.title
+              ? route.title
+              : ''
           "
         >
           <div class="text-[1.5em]" icon-btn :class="route.icon" />
