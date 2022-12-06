@@ -32,6 +32,8 @@ const usefulShortcuts: Shortcut[] = [
   ['fccc', 'flex justify-center items-center flex-col'],
 
   ['p-c', 'pa top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'],
+  ['collapseItem', 'cursor-pointer hover:bg-[#c9cdd4] fsc bg-[#f2f3f5] rounded px-2 py-1 dark:bg-[#2e2e30] dark:hover:bg-[#2b2b2e]'],
+  ['collapseSubItem', 'cursor-pointer hover:bg-[#c9cdd4] fsc rounded px-2 py-1 pl-4 dark:bg-transparent dark:hover:bg-[#2b2b2e]'],
 ]
 
 export default defineConfig({

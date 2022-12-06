@@ -8,5 +8,6 @@
 <style>
 .content {
   height: calc(100% - 4.5rem);
+  font-family: smiley-sans;
 }
 </style>

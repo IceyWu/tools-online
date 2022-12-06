@@ -80,12 +80,11 @@ const clickjsonFile = () => {
           {{ jsonFileName ? jsonFileName : '导入Json文件' }}
         </div>
       </div>
-
-      <div class="btn" @click="exportJson">
-        导出Json
-      </div>
       <div class="btn" @click="linksStore.initData">
         清除数据
+      </div>
+      <div class="btn" @click="exportJson">
+        导出Json
       </div>
     </div>
     <PrismEditor v-model="code" flex-1 mode="code" class="my-editor" :highlight="highlighter" line-numbers />

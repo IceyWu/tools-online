@@ -49,6 +49,9 @@ const routes = reactive([
             {{ route.name }}
           </div> -->
         </a>
+        <button class="text-[1.5em] pb-1.5" icon-btn @click="toggleDark()">
+          <div dark:i-carbon-moon i-carbon-sun />
+        </button>
       </div>
     </nav>
   </header>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CollapseList from './components/CollapseList.vue'
 import { useLinksStore } from '~/store/links'
 interface LinkItem {
   id: number
@@ -7,6 +8,7 @@ interface LinkItem {
   cover: string
   desc: string
   isCollect?: boolean
+  tags?: string[]
 }
 const linksStore = useLinksStore()
 const linkData = computed(() => linksStore.linkData)
@@ -49,6 +51,9 @@ const collect = (data: LinkItem) => {
           @click.stop="collect(item)"
         />
       </div>
+    </div>
+    <div flex-1>
+      <CollapseList />
     </div>
   </div>
 </template>
