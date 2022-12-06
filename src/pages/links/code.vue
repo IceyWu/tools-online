@@ -9,31 +9,19 @@ import { highlight, languages } from 'prismjs/components/prism-core'
 import 'prismjs/components/prism-clike'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/themes/prism-tomorrow.css' // import syntax highlighting styles
-import linkJson from './links.json'
+import { storeToRefs } from 'pinia'
+import { useLinksStore } from '~/store/links'
+const linksStore = useLinksStore()
+const { linksList } = storeToRefs(linksStore)
 const toast = useToast()
 const code = ref('')
 // code.value =
 // code的值为linkJson的linkList
-code.value = JSON.stringify(linkJson.linkList, null, 2)
+// code.value = JSON.stringify(linkJson.linkList, null, 2)
+code.value = JSON.stringify(linksList.value, null, 2)
 
 const highlighter = (code: any) => {
   return highlight(code, languages.js) // languages.<insert language> to return html with markup
-}
-
-// json下载await
-const download = async () => {
-  const blob = new Blob([code.value], { type: 'text/plain' })
-  const url = URL.createObjectURL(blob)
-  const link = document.createElement('a')
-  link.href = url
-  link.download = 'links.json'
-  link.click()
-  toast({
-    type: TYPE.SUCCESS,
-    position: POSITION.TOP_RIGHT,
-    message: '下载成功',
-    timeout: 2000,
-  })
 }
 
 // 导出json
@@ -54,6 +42,8 @@ const handleReadFile = (file: any) => {
     if (thisFile.target && thisFile.target.result) {
       const result = JSON.parse(thisFile.target.result.toString())
       code.value = JSON.stringify(result, null, 2)
+      // 保存到store
+      linksStore.saveLinks(result)
       return toast('导入成功!', {
         type: TYPE.SUCCESS,
         position: POSITION.TOP_RIGHT,

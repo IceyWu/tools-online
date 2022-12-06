@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import linkJson from './links.json'
+import { storeToRefs } from 'pinia'
+import { useLinksStore } from '~/store/links'
 interface LinkItem {
   id: number
   name: string
@@ -8,34 +9,23 @@ interface LinkItem {
   desc: string
   isCollect?: boolean
 }
-const colectList: any = ref([1])
-const linkList = computed(() => {
-  return linkJson.linkList.map((item: LinkItem) => {
-    if (colectList.value.includes(item.id))
-      item.isCollect = true
-    else
-      item.isCollect = false
-    return item
-  })
-})
+const linksStore = useLinksStore()
+const { linkData = [] } = storeToRefs(linksStore)
 const jump = (data: LinkItem) => {
   const { url } = data
   window.open(url)
 }
 const collect = (data: LinkItem) => {
   const { id } = data
-  if (colectList.value.includes(id))
-    colectList.value.splice(colectList.value.indexOf(id), 1)
-  else
-    colectList.value.push(id)
+  linksStore.saveCollectLink(id)
 }
 </script>
 
 <template>
   <div w-full flex justify="center" items-center>
     <div
-      v-for="(item) in linkList" :key="item.id"
-      class="shadow rounded-xl overflow-hidden cursor-pointer bg-red-400 h-60 w-50 card-box relative flex justify-center items-center"
+      v-for="(item) in linkData" :key="item.id"
+      class="shadow rounded-xl overflow-hidden cursor-pointer h-60 w-50 card-box relative flex justify-center items-center"
       @click="jump(item)"
     >
       <div class="absolute h-full w-full bg-cover bg z-0 " :style="{ backgroundImage: `url(${item.cover})` }" />
