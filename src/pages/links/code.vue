@@ -81,8 +81,8 @@ const goBack = () => {
 </script>
 
 <template>
-  <div flex>
-    <div class="btn-lis flex-1 f-c-c">
+  <div flex flex-wrap scrollbar="~ dark:track-color-gray-800 dark:thumb-color-stone-500 rounded w-8px">
+    <div class="btn-lis flex-one f-c-c w-full">
       <div class="btn" @click="goBack">
         🪐 Go Back
       </div>
@@ -107,7 +107,7 @@ const goBack = () => {
         导出Json
       </div>
     </div>
-    <PrismEditor v-model="code" flex-1 mode="code" class="my-editor" :highlight="highlighter" line-numbers />
+    <PrismEditor v-model="code" mode="code" class="my-editor flex-one" :highlight="highlighter" line-numbers />
   </div>
 </template>
 
@@ -134,6 +134,13 @@ const goBack = () => {
       margin-bottom: 10px;
     }
   }
+  // 当屏幕宽度大于 768px 时
+@media (min-width: 768px) {
+  .flex-one {
+    flex: 1 1 0%;
+    margin: 0 1rem;
+  }
+}
 </style>
 
 <route lang="yaml">

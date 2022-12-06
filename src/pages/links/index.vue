@@ -72,8 +72,8 @@ onMounted(() => {
     <div v-if="linkData.length === 0" w-full fcc>
       <EmptyData />
     </div>
-    <div v-else w-full fcc h-full>
-      <div flex-1 f-c-c h-full overflow="auto" scrollbar="~ dark:track-color-gray-800 dark:thumb-color-stone-500 rounded w-8px">
+    <div v-else w-full fcc h-full flex-wrap>
+      <div class="flex-one" f-c-c h-full overflow="auto" scrollbar="~ dark:track-color-gray-800 dark:thumb-color-stone-500 rounded w-8px">
         <div>
           <div v-if="coverIsLoading" class="w-150 h-80 fcc animate-pulse bg-gray-500/5 p-2">
             Loading...
@@ -99,7 +99,7 @@ onMounted(() => {
         </button>
         <!-- {{ selectItem }} -->
       </div>
-      <div flex-1 relative h-full>
+      <div class="flex-one" relative h-full w-full>
         <header mb-4 w-full fsc>
           <!-- switch选择器 -->
           <div class="bg-[#f2f3f5] dark:bg-[#2e2e30]" rounded-2xl px-4 py-1 fbc>
@@ -138,7 +138,7 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div v-else>
+        <div v-else w-full>
           <CollapseList @click-collapse-item="clickItem" />
         </div>
       </div>
@@ -178,6 +178,13 @@ onMounted(() => {
   box-sizing: border-box;
   // padding-top: 2rem;
   height: calc(100% - 6rem);
+}
+// 当屏幕宽度大于 768px 时
+@media (min-width: 768px) {
+  .flex-one {
+    flex: 1 1 0%;
+    margin: 0 1rem;
+  }
 }
 </style>
 
