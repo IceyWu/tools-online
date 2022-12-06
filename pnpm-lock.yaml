@@ -10,6 +10,7 @@ specifiers:
   '@vitejs/plugin-vue': ^3.2.0
   '@vitejs/plugin-vue-jsx': ^2.1.0
   '@vue/test-utils': ^2.2.1
+  '@vueuse/components': ^9.6.0
   '@vueuse/core': ^9.4.0
   '@vueuse/motion': 2.0.0-beta.12
   axios: ^1.1.3
@@ -44,6 +45,7 @@ specifiers:
 dependencies:
   '@types/qs': 6.9.7
   '@vitejs/plugin-vue-jsx': 2.1.1_vite@3.2.4+vue@3.2.45
+  '@vueuse/components': 9.6.0_vue@3.2.45
   '@vueuse/core': 9.6.0_vue@3.2.45
   '@vueuse/motion': 2.0.0-beta.12_vue@3.2.45
   axios: 1.2.0
@@ -1339,6 +1341,17 @@ packages:
     dependencies:
       vue: 3.2.45
     dev: true
+
+  /@vueuse/components/9.6.0_vue@3.2.45:
+    resolution: {integrity: sha512-Jqv1g68PtBC8Nnp8u2rpf6qku8cslr381fvlY1uUZa75zI2imxPLglhOWA/dBtMjla4L3nmaf9S7PAzXJnwH9w==}
+    dependencies:
+      '@vueuse/core': 9.6.0_vue@3.2.45
+      '@vueuse/shared': 9.6.0_vue@3.2.45
+      vue-demi: 0.13.11_vue@3.2.45
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: false
 
   /@vueuse/core/8.9.4_vue@3.2.45:
     resolution: {integrity: sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==}

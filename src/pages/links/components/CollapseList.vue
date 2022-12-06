@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useLinksStore } from '~/store/links'
+const emit = defineEmits(['clickCollapseItem'])
 const linksStore = useLinksStore()
 const { linksList } = storeToRefs(linksStore)
 const dataList = computed(() => {
@@ -17,18 +18,14 @@ const dataList = computed(() => {
           emoji: '🌈',
           children: [
             {
-              name: item.name,
-              id: item.id,
-              url: item.url,
+              ...item,
             },
           ],
         })
       }
       else {
         result[index].children.push({
-          name: item.name,
-          id: item.id,
-          url: item.url,
+          ...item,
         })
       }
       return
@@ -41,18 +38,14 @@ const dataList = computed(() => {
           isShowSub: false,
           children: [
             {
-              name: item.name,
-              id: item.id,
-              url: item.url,
+              ...item,
             },
           ],
         })
       }
       else {
         result[index].children.push({
-          name: item.name,
-          id: item.id,
-          url: item.url,
+          ...item,
         })
       }
     })
@@ -69,8 +62,9 @@ onMounted(() => {
 const selectedTag = ref('')
 const clickItem = (item: any) => {
   selectedTag.value = item.name
-  if (item.url)
-    window.open(item.url, '_blank')
+  emit('clickCollapseItem', item)
+  // if (item.url)
+  //   window.open(item.url, '_blank')
 }
 </script>
 

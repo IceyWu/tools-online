@@ -14,7 +14,20 @@ import { useLinksStore } from '~/store/links'
 const linksStore = useLinksStore()
 const { linksList } = storeToRefs(linksStore)
 const toast = useToast()
-const code = computed(() => JSON.stringify(linksList.value, null, 2))
+// 模板
+const template = `[
+    {
+      "id":1,
+      "name": "网站名称",
+      "desc": "网站描述",
+      "url": "https://www.baidu.com",
+      "cover":"https://www.baidu.com/img/bd_logo1.png",
+      "tags":[
+        "标签"]
+    }
+]
+`
+const code = computed(() => JSON.stringify(linksList.value, null, 2) === '[]' ? template : JSON.stringify(linksList.value, null, 2))
 
 const highlighter = (code: any) => {
   return highlight(code, languages.js) // languages.<insert language> to return html with markup
@@ -61,11 +74,18 @@ const clickjsonFile = () => {
   if (dom)
     dom.click()
 }
+const router = useRouter()
+const goBack = () => {
+  router.push('/links')
+}
 </script>
 
 <template>
   <div flex>
     <div class="btn-lis flex-1 f-c-c">
+      <div class="btn" @click="goBack">
+        🪐 Go Back
+      </div>
       <!-- 导入Json文件 -->
       <div>
         <input
