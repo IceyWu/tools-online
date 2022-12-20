@@ -29,6 +29,12 @@ const template = `[
 `
 const code = computed(() => JSON.stringify(linksList.value, null, 2) === '[]' ? template : JSON.stringify(linksList.value, null, 2))
 
+const codeValue = ref(code.value)
+// 监听code变化
+watch(code, (val) => {
+  codeValue.value = val
+})
+
 const highlighter = (code: any) => {
   return highlight(code, languages.js) // languages.<insert language> to return html with markup
 }
@@ -78,6 +84,22 @@ const router = useRouter()
 const goBack = () => {
   router.push('/links')
 }
+// 保存更改
+const saveChange = () => {
+  linksStore.saveLinks(JSON.parse(codeValue.value))
+  toast('保存成功!', {
+    type: TYPE.SUCCESS,
+    position: POSITION.TOP_RIGHT,
+  })
+}
+// 清除数据
+const clearData = () => {
+  linksStore.initData()
+  // toast('清除成功!', {
+  //   type: TYPE.SUCCESS,
+  //   position: POSITION.TOP_RIGHT,
+  // })
+}
 </script>
 
 <template>
@@ -100,14 +122,17 @@ const goBack = () => {
           {{ jsonFileName ? jsonFileName : '导入Json文件' }}
         </div>
       </div>
-      <div class="btn" @click="linksStore.initData">
+      <div class="btn" @click="clearData">
         清除数据
       </div>
       <div class="btn" @click="exportJson">
         导出Json
       </div>
+      <div class="btn" @click="saveChange">
+        保存更改
+      </div>
     </div>
-    <PrismEditor v-model="code" mode="code" class="my-editor flex-one" :highlight="highlighter" line-numbers />
+    <PrismEditor v-model="codeValue" mode="code" class="my-editor flex-one" :highlight="highlighter" line-numbers />
   </div>
 </template>
 
