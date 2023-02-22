@@ -40,13 +40,14 @@ const clickItem = (data: LinkItem) => {
 // switch List
 const switchList = ref([
   {
-    id: 1,
-    name: '卡片',
-  },
-  {
     id: 2,
     name: '列表',
   },
+  {
+    id: 1,
+    name: '卡片',
+  },
+
 ])
 const selectSwitch = ref(switchList.value[0].id)
 
