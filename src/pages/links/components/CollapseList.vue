@@ -72,11 +72,15 @@ const handleOpenAll = async (data: any[], isNewWin = false) => {
   // 在当前窗口打开所有链接
   data.forEach((item: any) => {
     if (item.url) {
-      if (isNewWin)
-        // window.open(item.url, '_blank')
-        window.open(item.url)
-      else
+      if (isNewWin) {
+        console.log('🎉------------------------------>1')
+        // 新窗口打开,不是当前窗口
+        window.open(item.url, 'newwindow', 'height=800, width=800, top=0, left=0')
+      }
+      else {
+        console.log('🎉------------------------------>2')
         window.open(item.url, '_blank')
+      }
     }
   })
 }
