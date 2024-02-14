@@ -22,7 +22,7 @@ export default () => {
     AutoImport({
       imports: [
         'vue',
-        'vue/macros',
+        // 'vue/macros',
         'vue-router',
         '@vueuse/core',
       ],
