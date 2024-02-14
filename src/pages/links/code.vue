@@ -28,7 +28,7 @@ const template = `[
 ]
 `
 const code = computed(() => JSON.stringify(linksList.value, null, 2) === '[]' ? template : JSON.stringify(linksList.value, null, 2))
-
+const router = useRouter()
 const codeValue = ref(code.value)
 // 监听code变化
 watch(code, (val) => {
@@ -56,13 +56,21 @@ const handleReadFile = (file: any) => {
   reader.onload = (thisFile) => {
     if (thisFile.target && thisFile.target.result) {
       const result = JSON.parse(thisFile.target.result.toString())
+      result.forEach((item: any) => {
+        if (!item.id)
+          // item.id = new Date().getTime()
+          item.id = new Date().getTime()
+      })
       // code.value = JSON.stringify(result, null, 2)
       // 保存到store
       linksStore.saveLinks(result)
-      return toast('导入成功!', {
+      toast('导入成功!', {
         type: TYPE.SUCCESS,
         position: POSITION.TOP_RIGHT,
       })
+      // setTimeout(() => {
+      router.replace('/links')
+      // }, 1000)
     }
   }
 }
@@ -80,7 +88,7 @@ const clickjsonFile = () => {
   if (dom)
     dom.click()
 }
-const router = useRouter()
+
 const goBack = () => {
   router.push('/links')
 }

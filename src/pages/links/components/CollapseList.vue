@@ -66,6 +66,46 @@ const clickItem = (item: any) => {
   // if (item.url)
   //   window.open(item.url, '_blank')
 }
+const handleOpenAll = async (data: any[], isNewWin = false) => {
+  // const testIcon = await getIcon('https://www.baidu.com')
+  // console.log('💗handleOpenAll---------->', testIcon)
+  // 在当前窗口打开所有链接
+  data.forEach((item: any) => {
+    if (item.url) {
+      if (isNewWin)
+        // window.open(item.url, '_blank')
+        window.open(item.url)
+      else
+        window.open(item.url, '_blank')
+    }
+  })
+}
+// 传入url,返回对应的icon
+const getIcon = (url: string) => {
+  return new Promise((resolve, reject) => {
+    const link = document.querySelector(`link[rel='icon'][href='${url}/favicon.ico']`)
+                 || document.querySelector(`link[rel='shortcut icon'][href='${url}/favicon.ico']`)
+
+    if (!link) {
+      reject(new Error(`Favicon not found for ${url}`))
+      return
+    }
+
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', link.href, true)
+    xhr.responseType = 'blob'
+    xhr.onload = function () {
+      if (xhr.status === 200)
+        resolve(xhr.response)
+      else
+        reject(new Error(`Failed to load favicon for ${url}`))
+    }
+    xhr.onerror = function () {
+      reject(new Error(`Failed to load favicon for ${url}`))
+    }
+    xhr.send()
+  })
+}
 </script>
 
 <template>
@@ -75,6 +115,15 @@ const clickItem = (item: any) => {
         <i icon-btn :class="item.isShowSub ? 'i-carbon-chevron-down' : 'i-carbon-chevron-right'" />
         <span ml-1> {{ item.emoji || '🎯' }}</span>
         <span ml-1> {{ item.name }}</span>
+        <div class="flex-1" />
+        <div
+          class="i-carbon-direction-bear-right-01-filled" title="打开全部（当前窗口）"
+          @click.stop="handleOpenAll(item.children)"
+        />
+        <div
+          class="i-carbon-direction-fork-filled" title="打开全部（新窗口）"
+          @click.stop="handleOpenAll(item.children, true)"
+        />
       </div>
       <div v-if="item.isShowSub" v-motion-slide-bottom text-lg mt-1 :delay="15">
         <div v-for="child in item.children" :key="child.name" class="collapseSubItem" @click="clickItem(child)">
