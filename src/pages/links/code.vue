@@ -10,6 +10,8 @@ import 'prismjs/components/prism-clike'
 import 'prismjs/components/prism-javascript'
 import 'prismjs/themes/prism-tomorrow.css' // import syntax highlighting styles
 import { storeToRefs } from 'pinia'
+import { getLinkPreview, getPreviewFromContent } from 'link-preview-js'
+import { to } from '@iceywu/utils'
 import { useLinksStore } from '~/store/links'
 const linksStore = useLinksStore()
 const { linksList } = storeToRefs(linksStore)
@@ -17,13 +19,8 @@ const toast = useToast()
 // 模板
 const template = `[
     {
-      "id":1,
-      "name": "网站名称",
-      "desc": "网站描述",
-      "url": "https://www.baidu.com",
-      "cover":"https://www.baidu.com/img/bd_logo1.png",
-      "tags":[
-        "标签"]
+      "url": "https://tgmeng.com/",
+      "tags":["前端"]
     }
 ]
 `
@@ -92,9 +89,40 @@ const clickjsonFile = () => {
 const goBack = () => {
   router.push('/links')
 }
+const handleUrlData = async (data = []) => {
+  const result = []
+  for (let index = 0; index < data.length; index++) {
+    const { url } = data[index]
+    if (url) {
+      const [err, res] = await to(getLinkPreview(url, {
+        // headers: {
+        //   'user-agent': 'googlebot',
+        //   'Accept-Language': 'fr-CA',
+        // },
+        // 处理跨域
+        // proxyUrl: 'https://cors-anywhere.herokuapp.com/',
+        // mode: 'no-cors',
+
+      }))
+      if (res) {
+        const { title, favicons, images } = res
+        const newData = {
+          ...data[index] as any,
+          desc: title,
+          cover: images[0] || favicons[0],
+          name: title,
+        }
+        result.push(newData)
+      }
+    }
+  }
+  return result
+}
 // 保存更改
-const saveChange = () => {
-  linksStore.saveLinks(JSON.parse(codeValue.value))
+const saveChange = async () => {
+  const dataTemp = await handleUrlData(JSON.parse(codeValue.value))
+  console.log('🍪-----dataTemp-----', dataTemp)
+  linksStore.saveLinks(dataTemp)
   toast('保存成功!', {
     type: TYPE.SUCCESS,
     position: POSITION.TOP_RIGHT,

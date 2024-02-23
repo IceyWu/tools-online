@@ -11,6 +11,7 @@
     "up": "taze major -I"
   },
   "dependencies": {
+    "@iceywu/utils": "^0.0.37",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue-jsx": "^2.1.0",
     "@vueuse/components": "^9.6.0",
@@ -19,6 +20,7 @@
     "axios": "^1.1.3",
     "less": "^4.1.3",
     "less-loader": "^11.1.0",
+    "link-preview-js": "^3.0.5",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.24",
     "pinia-plugin-persistedstate": "^3.0.1",
