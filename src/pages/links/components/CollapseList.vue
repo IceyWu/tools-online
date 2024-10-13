@@ -122,12 +122,13 @@ const getIcon = (url: string) => {
         <div class="flex-1" />
         <div
           class="i-carbon-direction-bear-right-01-filled" title="打开全部（当前窗口）"
+          aria-label="Open All in Current Window"
           @click.stop="handleOpenAll(item.children)"
         />
-        <div
+        <!-- <div
           class="i-carbon-direction-fork-filled" title="打开全部（新窗口）"
           @click.stop="handleOpenAll(item.children, true)"
-        />
+        /> -->
       </div>
       <div v-if="item.isShowSub" v-motion-slide-bottom text-lg mt-1 :delay="15">
         <div v-for="child in item.children" :key="child.name" class="collapseSubItem" @click="clickItem(child)">

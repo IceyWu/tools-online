@@ -11,7 +11,7 @@
     "up": "taze major -I"
   },
   "dependencies": {
-    "@iceywu/utils": "^0.0.37",
+    "@iceywu/utils": "^0.0.46",
     "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue-jsx": "^2.1.0",
     "@vueuse/components": "^9.6.0",
